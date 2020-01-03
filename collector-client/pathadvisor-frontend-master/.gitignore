@@ -1,0 +1,8 @@
+node_modules
+.vscode
+build
+Thumbs.db
+deploy*
+.DS_Store
+.env.*
+Notes.txt

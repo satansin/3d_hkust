@@ -1,0 +1,18 @@
+.overlayBody{
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  border: 2px solid white;
+  border-radius: 10px;
+  color: white;
+  font-size: 12pt;
+  background: rgba(0,0,0,0.8)
+}
+
+.overlayContent {
+  overflow-y: scroll;
+  height: 100%;
+}

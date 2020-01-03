@@ -1,0 +1,29 @@
+.body {
+  height: calc(100% - 43px);
+}
+
+.bodyMobile {
+  height:  calc(100% - 47px);
+}
+
+.headerContainer {
+  background-color: #F1F1F1;
+}
+
+.header {
+  width: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  font-family: Verdana;
+  font-size: 14pt;
+  color: black;
+  padding: 0 10px;
+  line-height: 43px;
+}
+
+.social {
+  width: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: right;
+}

@@ -1,0 +1,24 @@
+.body {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+}
+
+.button {
+  display: block;
+}
+
+.buttonImage {
+  width: 24px;
+  height: 24px;
+}
+
+.buttonImageMobile {
+  width: 36px;
+  height: 36px;
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
