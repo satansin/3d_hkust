@@ -1,7 +1,9 @@
 A user interface for data collection usage.
 
+(Remember to use Administrator for the steps)
 
-Get Started:
+
+# Get Started:
 
 Install git, node 8.x and npm 5.x.
 
@@ -15,8 +17,10 @@ Then run npm start in the terminal to start the client.
 
 The client would run locally now at http://localhost:3000.
 
+client.bat would let you be familiar with how to collect the data.
 
-How to use:
+
+# How to use:
 
 Right click on the position that the data would refer to. Click "Store 3D data at this position".
 
