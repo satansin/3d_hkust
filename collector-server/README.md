@@ -23,6 +23,8 @@ If so, just proceed to maintain the database.
 
 Install and configure Apache following this guide https://www.znetlive.com/blog/how-to-install-apache-php-and-mysql-on-windows-10-machine/.
 
+**_IMPORTANT_**: Download the x64 version on 64-bit machine.
+
 Apps and pages can be placed under /Apache24/htdocs/.
 
 https://localhost/ will show some information indicating the successful Apache server start.
