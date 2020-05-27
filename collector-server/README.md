@@ -31,6 +31,8 @@ https://localhost/ will show some information indicating the successful Apache s
 
 Install and configure PHP following this guide https://www.znetlive.com/blog/how-to-install-apache-php-and-mysql-on-windows-10-machine/.
 
+**_IMPORTANT_**: Download the "VC15 x64 Thread Safe", the non-Thread Safe version has no php7apache2_4.dll.
+
 **_IMPORTANT_**: Add PHP in the **_system_** environment variable instead of the user environment variable.
 
 Copy the folder 3DData/ to /Apache24/htdocs/.
