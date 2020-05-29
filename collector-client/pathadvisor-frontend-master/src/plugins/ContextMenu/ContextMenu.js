@@ -73,7 +73,21 @@ class ContextMenu extends Component {
     window.open(
       `http://localhost:80/3DData/DataUpload.php?floor=${floor}&x=${clientMapX}&y=${clientMapY}`,
       '_blank',
-      'height=600,width=700',
+      // 'height=600,width=700',
+    );
+    this.hideContextMenu();
+  };
+  showThreeDData = () => {
+    const { clientMapX, clientMapY } = this.state;
+    const { APIEndpoint, floor } = this.props;
+    // window.open(
+    //   `http://localhost:80/3DData/DataUpload.php?floor=${floor}&x=${clientMapX}&y=${clientMapY}`,
+    //   '_blank',
+    //   'height=600,width=700',
+    // );
+    window.open(
+      `http://rwcpu1.cse.ust.hk/3d-map/visualization/plyViewer/plane.html`,
+      '_blank'
     );
     this.hideContextMenu();
   };
@@ -148,6 +162,11 @@ class ContextMenu extends Component {
         <li>
           <button type="button" className={style.button} onClick={this.storeThreeDData}>
             Store 3D data at this position
+          </button>
+        </li>
+        <li>
+          <button type="button" className={style.button} onClick={this.showThreeDData}>
+            Show 3D data at this position
           </button>
         </li>
       </ul>

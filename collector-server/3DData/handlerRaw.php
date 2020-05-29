@@ -3,7 +3,7 @@
 <?php
     $servername = "localhost";
     $username = "root";
-    $password = "CSCFm4a1";
+    $password = "";
 
     // create connection
     $conn = new mysqli($servername, $username, $password);
@@ -24,7 +24,7 @@
         die("incorrect url");
     }
 
-    //print_r($_FILES);
+    // print_r($_FILES);
     $filename=$_FILES['dataRaw']['name'];
     $type=$_FILES['dataRaw']['type'];
     $tmp_name=$_FILES['dataRaw']['tmp_name'];
@@ -38,9 +38,9 @@
         $newPath=$date.'.'.$newnametemp[1];
         $oldPath=$_FILES['dataRaw']['tmp_name'];
 
-        rename($oldPath,"RawData/".$newPath);
+        @rename($oldPath,"RawData/".$newPath);
 
-        $time = date("Y-m-d");
+        $time = date("Y-m-d H:i:s");
         $sql = "INSERT INTO RawData (floor, x, y, lastModifyDate, whetherPostprocessed, src) VALUES ('{$floor}', {$x}, {$y}, '{$time}', 0, 'RawData/{$newPath}')";
 
 
@@ -50,9 +50,9 @@
 
         if (mysqli_query($conn, $sql)) {
             echo "Uploading to Database...<br>";
-            echo "RawData upload Succeed!<br><br>";
-            echo "If you want to upload again at this position, please click on the button below.<br>";
-            echo "<b>Do you want to upload again?<b/>";
+            echo "RawData upload Success!<br><br>";
+            // echo "If you want to upload again at this position, please click on the button below.<br>";
+            // echo "<b>Do you want to upload again?<b/>";
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
@@ -68,7 +68,7 @@
     
 ?>
 
-<input type="button" value="upload again" onclick="javascrtpt:window.location.href='http://localhost:80/3DData/DataUpload.php?floor=<?php echo "{$floor}"; ?>&x=<?php echo "{$x}"; ?>&y=<?php echo "{$y}"; ?>'">
+<input type="button" value="Return" onclick="javascrtpt:window.location.href='http://localhost:80/3DData/DataUpload.php?floor=<?php echo "{$floor}"; ?>&x=<?php echo "{$x}"; ?>&y=<?php echo "{$y}"; ?>'">
     
 </body>
 </html>

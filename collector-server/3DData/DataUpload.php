@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "CSCFm4a1";
+$password = "";
  
 // create connection
 $conn = new mysqli($servername, $username, $password);
@@ -36,13 +36,16 @@ else{
 div.scroll
 {
 background-color:#FFFFFF;
-width:500px;
-height:300px;
+width:700px;
+height:200px;
 overflow:auto;
 }    
         
 BODY {
 	FONT-SIZE: 18px; 
+}
+table {
+    border-spacing: 1px
 }
 OL LI {
 	MARGIN: 8px
@@ -92,7 +95,7 @@ OL LI {
         echo " x : {$x}<br>";
         echo " y : {$y}<br>";
         echo " floor : {$floor}<br><br>";
-        echo "<h3>Please choose what kind of file you are uploading.</h3>";
+        // echo "<h3>Please choose what kind of file you are uploading.</h3>";
     ?>
     
         
@@ -130,19 +133,32 @@ OL LI {
              var urlPro = "handlerPro.php?floor=" + submitEndPro.floorInputPro.value + "&x=" + submitEndPro.xInputPro.value + "&y=" + submitEndPro.yInputPro.value;
              document.getElementById('submitPro').action = urlPro;
         }
+        function processRaw(floor, x, y, rawID){
+            var urlProcRaw = "processRaw.php?floor=" + floor + "&x=" + x + "&y=" + y + "&id=" + rawID;
+            window.location.href = 'http://localhost/3DData/' + urlProcRaw;
+        }
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        function callRecordClient() {
+            shell = new ActiveXObject("WScript.Shell");
+            shell.run("client.bat", 1, false);
+        }
     </script>
     
     <DIV id=con>
     <UL id=tags>
     <LI><A onClick="selectTag('tagContent0',this)" 
     href="javascript:void(0)">RawData</A> </LI>
-    <LI><A onClick="selectTag('tagContent1',this)" 
-    href="javascript:void(0)">Post-processed Data</A> </LI>
+<!--     <LI><A onClick="selectTag('tagContent1',this)" 
+    href="javascript:void(0)">Post-processed Data</A> </LI> -->
     </UL> 
     <DIV id=tagContent>
     <DIV class="tagContent selectTag" id=tagContent0>
         Your raw data file should be of format ".bag".<br>
-        <a href="recordClient:\\">Start collecting in real time here</a><br>
+        <!-- <a href="client_proto:\\">Start collecting in real time here</a><br> -->
+        <!-- <a href="javascript:callRecordClient()">Start collecting in real time here</a><br> -->
+        <!-- <a href="App_Exec.hta">Start collecting in real time here</a><br> -->
         You can change the position parameters if needed.<br>
         <form id="submitRaw" name="submitEndRaw" action="" onsubmiturl method="post" enctype="multipart/form-data">
         
@@ -150,13 +166,14 @@ OL LI {
         y     : <input type="text" name="yInputRaw" oninput="value=value.replace(/[^\d]/g,'')" value="<?php echo "{$y}";?>"><br/>
         floor : <input type="text" name="floorInputRaw" value="<?php echo "{$floor}";?>"><br/><br/>
 
-        <input type="file" onclick="checkUpload()" name="dataRaw">
+        <!-- <input type="file" onclick="checkUpload()" name="dataRaw"> -->
+        <input type="file" name="dataRaw">
 
         <input type="submit" value="send" onclick="checkRaw()" >
 
         </form>
     </DIV>
-    <DIV class=tagContent id=tagContent1>
+    <!-- <DIV class=tagContent id=tagContent1>
         Your post-processed data file should be of format:<br>
         ".pcd", ".ply" or other 3D Data format.<br>
         You can change the position parameters if needed.<br>
@@ -171,16 +188,17 @@ OL LI {
         <input type="submit" value="send" onclick="checkPro()" >
 
         </form>
-    </DIV>
+    </DIV> -->
     </DIV></DIV>
     
-    <?php echo "<br><h3>Process New Rawdata</h3>"; ?>
+    <br><h3>Process New Rawdata</h3>
     <DIV id="gdt_id" name="gdt_name" class="scroll"><table border="1">
         <tr>
         <th>Rawdata_x</th>
         <th>Rawdata_y</th>
         <th>Rawdata_floor</th>
-        <th>process situation</th>
+        <th>Upload Time</th>
+        <th>Process Status</th>
         </tr>
         <?php
             $sql="SELECT * FROM Rawdata";
@@ -191,8 +209,38 @@ OL LI {
                     echo "<td>{$row['x']}</td>";
                     echo "<td>{$row['y']}</td>";
                     echo "<td>{$row['floor']}</td>";
-                    echo "<td><input type=\"button\" value=\"process\"></td>";
+                    echo "<td>{$row['lastModifyDate']}</td>";
+                    echo "<td>Not Processed</td>";
+                    echo "<td><input type=\"button\" value=\"Process\" onClick=\"processRaw('{$floor}', {$x}, {$y}, {$row['id']})\"></td>";
+                } else {
+                    echo "<tr>";
+                    echo "<td>{$row['x']}</td>";
+                    echo "<td>{$row['y']}</td>";
+                    echo "<td>{$row['floor']}</td>";
+                    echo "<td>{$row['lastModifyDate']}</td>";
+                    echo "<td>Processed</td>";
+                    // echo "<td><input type=\"button\" value=\"process\"></td>";
                 }
+            }
+        ?>
+        
+        </table>
+    </DIV>
+    
+    <br><h3>Show Reconstructed Data</h3>
+    <DIV id="srd_id" name="srd_name" class="scroll"><table border="1">
+        <tr>
+        <th>Rawdata_floor</th>
+        <th>Last Update Time</th>
+        </tr>
+        <?php
+            $sql_srd="SELECT * FROM Dataset";
+            $selectResult_srd=$conn->query($sql_srd);
+            while($row=mysqli_fetch_assoc($selectResult_srd)){
+                echo "<tr>";
+                echo "<td>{$row['floor']}</td>";
+                echo "<td>{$row['lastModifyDate']}</td>";
+                echo "<td><input type=\"button\" value=\"View Model\" onClick=\"window.open(`http://rwcpu1.cse.ust.hk/3d-map/visualization/plyViewer/plane.html`, '_blank')\"></td>";
             }
             $conn->close();
         ?>
